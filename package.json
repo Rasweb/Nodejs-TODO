@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "express": "^4.17.2",
+    "express-handlebars": "^6.0.2"
+  },
+  "name": "nodejs-todo",
+  "description": "A TODO list created using:\r Nodejs\r Express\r Template engine\r Forms",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rasweb/Nodejs-TODO.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rasweb/Nodejs-TODO/issues"
+  },
+  "homepage": "https://github.com/Rasweb/Nodejs-TODO#readme"
+}
