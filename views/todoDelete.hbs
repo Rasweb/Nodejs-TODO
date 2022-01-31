@@ -1,1 +1,17 @@
 <h2>Delete a ToDo</h2>
+
+<p>Description:
+  {{description}}
+</p>
+
+<p>
+  Created:
+  {{created}}
+</p>
+
+<p>Done:
+  {{done}}
+</p>
+
+<form action="/todo/{{id}}/delete" method="post">
+  <input type="submit" value="Delete" /></form>

@@ -70,14 +70,39 @@ app.get("/todo/:id", (req, res) => {
 
 // UPDATE
 // Create the update page at /update
-app.get("/todo/update", (req, res) => {
-  res.render("todoUpdate");
+app.get("/todo/:id/update", (req, res) => {
+  const id = parseInt(req.params.id);
+  const todo = todos.find((t) => t.id == id);
+  res.render("todoUpdate", todo);
+});
+
+app.post("/todo/:id/update", (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = todos.findIndex((i) => i.id == id);
+
+  todos[index].created = req.body.created;
+  todos[index].description = req.body.description;
+  todos[index].done = req.body.done;
+
+  res.redirect("/todo/");
 });
 
 // DELETE
 // Create the delete page at /delete
-app.get("/todo/delete", (req, res) => {
-  res.render("todoDelete");
+app.get("/todo/:id/delete", (req, res) => {
+  const id = parseInt(req.params.id);
+  const todo = todos.find((t) => t.id == id);
+
+  res.render("todoDelete", todo);
+});
+
+app.post("/todo/:id/delete", (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = todos.findIndex((i) => i.id == id);
+
+  todos.splice(index, 1);
+
+  res.redirect("/todo");
 });
 
 app.listen(8000, () => {
