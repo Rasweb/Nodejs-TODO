@@ -32,6 +32,26 @@ app.get("/", (req, res) => {
   res.render("home", { todos });
 });
 
+// Create the create page at /create
+app.get("/create", (req, res) => {
+  res.render("todoCreate");
+});
+
+// Create the remove page at /remove
+app.get("/remove", (req, res) => {
+  res.render("todoRemove");
+});
+
+// Create the update page at /update
+app.get("/update", (req, res) => {
+  res.render("todoUpdate");
+});
+
+// Create the delete page at /delete
+app.get("/delete", (req, res) => {
+  res.render("todoDelete");
+});
+
 app.listen(8000, () => {
   console.log("http://localhost:8000");
 });

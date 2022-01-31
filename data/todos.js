@@ -21,5 +21,3 @@ const todos = [
 ];
 
 module.exports = todos;
-
-// Pay bills, train, cook dinner, read book
