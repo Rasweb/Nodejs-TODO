@@ -21,11 +21,6 @@ app.engine(
   exphbs.engine({
     defaultLayout: "main",
     extname: ".hbs",
-    // helpers: {
-    //   todaysDate() {
-    //     return new Date();
-    //   },
-    // },
   })
 );
 
@@ -88,30 +83,3 @@ app.get("/todo/delete", (req, res) => {
 app.listen(8000, () => {
   console.log("http://localhost:8000");
 });
-
-let dateTime = new Date();
-// Adjust 0 before single digit date and prevents more than two numbers.
-//("0" + date()).slice(-2);
-
-// get current date
-let date = ("0" + dateTime.getDate()).slice(-2);
-
-// get current month
-let month = ("0" + (dateTime.getMonth() + 1)).slice(-2);
-
-// get current year
-let year = dateTime.getFullYear();
-
-// get current hours
-let hours = ("0" + dateTime.getHours()).slice(-2);
-
-// get current minutes
-let minutes = ("0" + dateTime.getMinutes()).slice(-2);
-
-// get current seconds
-let seconds = ("0" + dateTime.getSeconds()).slice(-2);
-
-// prints date & time in YYYY-MM-DD HH:MM:SS format
-console.log(
-  year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds
-);
