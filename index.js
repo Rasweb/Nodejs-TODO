@@ -21,11 +21,11 @@ app.engine(
   exphbs.engine({
     defaultLayout: "main",
     extname: ".hbs",
-    helpers: {
-      todaysDate() {
-        return new Date();
-      },
-    },
+    // helpers: {
+    //   todaysDate() {
+    //     return new Date();
+    //   },
+    // },
   })
 );
 
@@ -68,7 +68,7 @@ app.post("/todo/create", (req, res) => {
 
 app.get("/todo/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const todo = todos.find((t) => (t.id = id));
+  const todo = todos.find((t) => t.id == id);
 
   res.render("oneTodo", todo);
 });
