@@ -2,6 +2,16 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const todos = require("./data/todos");
 
+function getNewId(list) {
+  let maxId = 0;
+  for (const item of list) {
+    if (item.id > maxId) {
+      maxId = item.id;
+    }
+  }
+  return maxId + 1;
+}
+
 // Initialize the app.
 const app = express();
 
@@ -29,26 +39,49 @@ app.use(express.urlencoded({ extended: true }));
 
 // Create the home page at /.
 app.get("/", (req, res) => {
-  res.render("home", { todos });
+  res.render("home");
 });
 
+// READ
+app.get("/todo", (req, res) => {
+  res.render("todoRead", { todos });
+});
+
+// CREATE
 // Create the create page at /create
-app.get("/create", (req, res) => {
+app.get("/todo/create", (req, res) => {
   res.render("todoCreate");
 });
 
-// Create the remove page at /remove
-app.get("/remove", (req, res) => {
-  res.render("todoRemove");
+app.post("/todo/create", (req, res) => {
+  const id = getNewId(todos);
+  const newTodo = {
+    id: id,
+    created: parseInt(req.body.created),
+    description: req.body.description,
+    done: req.body.done,
+  };
+
+  todos.push(newTodo);
+  res.redirect("/todo/" + id);
 });
 
+app.get("/todo/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const todo = todos.find((t) => (t.id = id));
+
+  res.render("oneTodo", todo);
+});
+
+// UPDATE
 // Create the update page at /update
-app.get("/update", (req, res) => {
+app.get("/todo/update", (req, res) => {
   res.render("todoUpdate");
 });
 
+// DELETE
 // Create the delete page at /delete
-app.get("/delete", (req, res) => {
+app.get("/todo/delete", (req, res) => {
   res.render("todoDelete");
 });
 
