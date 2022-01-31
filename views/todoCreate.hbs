@@ -1,7 +1,10 @@
 <h2>Create new ToDo</h2>
 
 <form action="/todo/create" method="post">
-  <input type="datetime" name="created" placeholder="Date created" />
+  <input type="datetime-local" name="created" placeholder="Date created" />
   <input type="text" name="description" placeholder="Description" />
-  <input type="text" name="done" placeholder="false/true" />
+  <select name="done">
+    <option value="false">False</option>
+    <option value="true">True</option>
+  </select>
   <input type="submit" value="Add" /></form>

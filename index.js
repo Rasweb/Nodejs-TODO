@@ -57,7 +57,7 @@ app.post("/todo/create", (req, res) => {
   const id = getNewId(todos);
   const newTodo = {
     id: id,
-    created: parseInt(req.body.created),
+    created: req.body.created,
     description: req.body.description,
     done: req.body.done,
   };
