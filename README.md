@@ -1,2 +1,7 @@
 # Nodejs-TODO
-A TODO list created using nodeJs and express 
+
+A TODO list created using:
+Nodejs
+Express
+Template engine
+Forms
