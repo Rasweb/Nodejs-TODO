@@ -2,21 +2,21 @@ const todos = [
   {
     id: 1,
     created: "2022-01-31 09:49:15",
-    Description: "Pay bills",
-    Done: false,
+    description: "Pay bills",
+    done: false,
   },
-  { id: 2, created: "2022-01-31 09:49:25", Description: "Train", Done: false },
+  { id: 2, created: "2022-01-31 09:49:25", description: "Train", Done: false },
   {
     id: 3,
     created: "2022-01-31 09:49:35",
-    Description: "Cook dinner",
-    Done: false,
+    description: "Cook dinner",
+    done: false,
   },
   {
     id: 4,
     created: "2022-01-31 09:49:45",
-    Description: "Read Book",
-    Done: false,
+    description: "Read Book",
+    done: false,
   },
 ];
 

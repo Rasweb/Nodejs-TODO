@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Create the home page at /.
 app.get("/", (req, res) => {
-  res.render("home");
+  res.render("home", { todos });
 });
 
 app.listen(8000, () => {
