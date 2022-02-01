@@ -1,5 +1,6 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const req = require("express/lib/request");
 const todos = require("./data/todos");
 
 function getNewId(list) {
@@ -108,3 +109,13 @@ app.post("/todo/:id/delete", (req, res) => {
 app.listen(8000, () => {
   console.log("http://localhost:8000");
 });
+
+// Sort the array todos by the created date.
+//const sortArray = todos.sort((a, b) => a.created - b.created);
+
+// If value done
+// if (req.body.checked) {
+//   console.log("It's done");
+// } else {
+//   console.log("NOT done.");
+// }
