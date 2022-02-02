@@ -110,6 +110,11 @@ app.listen(8000, () => {
   console.log("http://localhost:8000");
 });
 
+// Sort
+app.get();
+
+//completed
+app.get();
 // Sort the array todos by the created date.
 //const sortArray = todos.sort((a, b) => a.created - b.created);
 
