@@ -1,5 +1,7 @@
+const { response } = require("express");
 const express = require("express");
 const exphbs = require("express-handlebars");
+const req = require("express/lib/request");
 const todos = require("./data/todos");
 
 function getNewId(list) {
@@ -24,6 +26,44 @@ function sortLate() {
     return new Date(b.created) - new Date(a.created);
   });
 }
+
+function doneTodo() {
+  // for (const todo of todos) {
+  //   if ((todo.done = true)) {
+  //     console.log("Its done");
+  //   } else {
+  //     console.log("Not done");
+  //   }
+  // }
+  const doneTodo = [];
+
+  for (let i = 0; i < todos.length; i++) {
+    if (todos[i].done === true) {
+      console.log("hej");
+      doneTodo.push(todos[i]);
+    } else {
+      console.log("NEJ");
+    }
+  }
+  console.log(doneTodo);
+}
+
+// function Done() {
+//   if () {
+//     console.log("It's done");
+//   } else {
+//   }
+// }
+
+//completed
+
+// If value done
+// if (req.body.checked) {
+//   console.log("It's done");
+// } else {
+//   console.log("NOT done.");
+// }
+
 // Initialize the app.
 const app = express();
 
@@ -83,6 +123,11 @@ app.get("/todo/sortLate", (req, res) => {
   res.render("todoSortLate", { todos });
 });
 
+app.get("/todo/done", (req, res) => {
+  doneTodo();
+  res.render("todoDone", { todos });
+});
+
 app.get("/todo/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const todo = todos.find((t) => t.id == id);
@@ -130,15 +175,3 @@ app.post("/todo/:id/delete", (req, res) => {
 app.listen(8000, () => {
   console.log("http://localhost:8000");
 });
-
-//completed
-//app.get();
-// Sort the array todos by the created date.
-//const sortArray = todos.sort((a, b) => a.created - b.created);
-
-// If value done
-// if (req.body.checked) {
-//   console.log("It's done");
-// } else {
-//   console.log("NOT done.");
-// }
