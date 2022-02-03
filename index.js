@@ -1,6 +1,5 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
-const req = require("express/lib/request");
 const todos = require("./data/todos");
 
 function getNewId(list) {
@@ -13,6 +12,18 @@ function getNewId(list) {
   return maxId + 1;
 }
 
+//Sort
+function sortEarly() {
+  todos.sort(function (a, b) {
+    return new Date(a.created) - new Date(b.created);
+  });
+}
+
+function sortLate() {
+  todos.sort(function (a, b) {
+    return new Date(b.created) - new Date(a.created);
+  });
+}
 // Initialize the app.
 const app = express();
 
@@ -60,6 +71,16 @@ app.post("/todo/create", (req, res) => {
 
   todos.push(newTodo);
   res.redirect("/todo/" + id);
+});
+
+app.get("/todo/sortEarly", (req, res) => {
+  sortEarly();
+  res.render("todoSortEarly", { todos });
+});
+
+app.get("/todo/sortLate", (req, res) => {
+  sortLate();
+  res.render("todoSortLate", { todos });
 });
 
 app.get("/todo/:id", (req, res) => {
@@ -110,15 +131,6 @@ app.listen(8000, () => {
   console.log("http://localhost:8000");
 });
 
-//Sort
-function sortArray() {
-  todos.sort(function (a, b) {
-    return new Date(a.created) - new Date(b.created);
-  });
-  console.log(todos);
-}
-
-sortArray();
 //completed
 //app.get();
 // Sort the array todos by the created date.
