@@ -1,7 +1,6 @@
 const { response } = require("express");
 const express = require("express");
 const exphbs = require("express-handlebars");
-const req = require("express/lib/request");
 const todos = require("./data/todos");
 
 function getNewId(list) {
@@ -39,21 +38,14 @@ function doneTodo() {
 
   for (let i = 0; i < todos.length; i++) {
     if (todos[i].done === true) {
-      console.log("hej");
+      //console.log("hej");
       doneTodo.push(todos[i]);
     } else {
-      console.log("NEJ");
+      continue;
     }
   }
-  console.log(doneTodo);
+  return doneTodo;
 }
-
-// function Done() {
-//   if () {
-//     console.log("It's done");
-//   } else {
-//   }
-// }
 
 //completed
 
@@ -91,6 +83,8 @@ app.get("/", (req, res) => {
 
 // READ
 app.get("/todo", (req, res) => {
+  doneTodo();
+
   res.render("todoRead", { todos });
 });
 
@@ -124,8 +118,7 @@ app.get("/todo/sortLate", (req, res) => {
 });
 
 app.get("/todo/done", (req, res) => {
-  doneTodo();
-  res.render("todoDone", { todos });
+  res.render("todoDone", { doneTodo });
 });
 
 app.get("/todo/:id", (req, res) => {
