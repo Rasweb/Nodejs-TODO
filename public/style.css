@@ -52,3 +52,38 @@ select {
 footer {
   padding: 20px;
 }
+
+@media screen and (min-width: 1024px) {
+  h1 {
+    font-size: 2.6rem;
+  }
+  a {
+    margin: 4px;
+    font-size: 1.4rem;
+  }
+  h2 {
+    font-size: 2.4rem;
+  }
+  p {
+    font-size: 1.6rem;
+  }
+
+  input {
+    width: 300px;
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  select {
+    font-size: 1.4rem;
+    width: 200px;
+  }
+
+  input[type="submit"] {
+    width: 200px;
+  }
+
+  footer {
+    font-size: 1.2rem;
+  }
+}
