@@ -86,9 +86,9 @@ router.post("/:id/update", async (req, res) => {
   };
 
   const dataBase = await db.getTodoCollection();
-  await dataBase.updateOne({ _id: id }, { set: todo });
+  await dataBase.updateOne({ _id: id }, { $set: todo });
 
-  res.redirect("/:id");
+  res.redirect(`/todo/${id}`);
 });
 
 // DELETE
