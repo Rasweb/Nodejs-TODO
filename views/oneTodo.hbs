@@ -15,4 +15,7 @@
 
 <a href="/todo">To List</a>
 <a href="/todo/{{_id}}/update">Update</a>
-<a href="/todo/{{_id}}/delete">Delete</a>
+
+<form action="/todo/{{_id}}/delete" method="post">
+  <input type="submit" value="Ta bort" class="delete-btn" />
+</form>

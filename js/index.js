@@ -30,10 +30,6 @@ app.get("/", (req, res) => {
 
 app.use("/todo", todoRouter);
 
-app.use("/", (req, res) => {
-  res.status(404).render("Error! Not found!");
-});
-
 app.listen(8000, () => {
   console.log("http://localhost:8000");
 });

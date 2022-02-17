@@ -20,7 +20,8 @@ function sortLate() {
 
 // READ
 router.get("/", async (req, res) => {
-  const todos = await db.getTodoCollection();
+  const collection = await db.getTodoCollection();
+  const todos = await collection.find().toArray();
 
   res.render("todoRead", { todos });
 });
@@ -37,15 +38,16 @@ router.post("/create", async (req, res) => {
     description: req.body.description,
     done: req.body.done,
   };
-  const dataBase = await db.getTodoCollection();
-  await dataBase.insertOne(todo);
+  const collection = await db.getTodoCollection();
+  await collection.insertOne(todo);
 
   res.redirect("/todo");
 });
 
 router.get("/sortEarly", async (req, res) => {
-  const todos = await db.getTodoCollection();
   sortEarly();
+  const todos = await db.getTodoCollection();
+
   res.render("todoSortEarly", { todos });
 });
 
@@ -70,7 +72,7 @@ router.get("/:id/update", async (req, res) => {
   const id = ObjectId(req.params.id);
 
   const dataBase = await db.getTodoCollection();
-  await dataBase.findOne({ _id: id }, (err, todo) => {
+  dataBase.findOne({ _id: id }, (err, todo) => {
     res.render("todoUpdate", todo);
   });
 });
@@ -90,11 +92,11 @@ router.post("/:id/update", async (req, res) => {
 });
 
 // DELETE
-router.get("/todo/:id/delete", async (req, res) => {
+router.post("/:id/delete", async (req, res) => {
   const id = ObjectId(req.params.id);
 
-  const dataBase = await db.getTodoCollection();
-  await dataBase.deleteOne({ _id: id });
+  const collection = await db.getTodoCollection();
+  await collection.deleteOne({ _id: id });
 
   res.redirect("/todo");
 });
