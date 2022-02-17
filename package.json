@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "express": "^4.17.2",
-    "express-handlebars": "^6.0.2"
+    "express-handlebars": "^6.0.2",
+    "mongodb": "^4.3.1"
   },
   "name": "nodejs-todo",
   "description": "A TODO list created using:\r Nodejs\r Express\r Template engine\r Forms",
