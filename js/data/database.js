@@ -1,7 +1,8 @@
-const { MongoClient } = require("mongodb");
+const mongodb = require("mongodb");
 
 async function getDb() {
-  const client = new MongoClient(process.env.MONGODB_CONNECTION_STRING);
+  const client = new mongodb.MongoClient(process.env.MONGODB_CONNECTION_STRING);
+
   await client.connect();
 
   const db = client.db("NodeJS-Todo");
@@ -12,7 +13,7 @@ async function getDb() {
 async function getTodoCollection() {
   const db = await getDb();
 
-  return db.collection("books");
+  return db.collection("todos");
 }
 
 module.exports = {

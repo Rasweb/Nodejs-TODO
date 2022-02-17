@@ -1,165 +1,102 @@
-// const express = require("express");
-// const exphbs = require("express-handlebars");
-// const todos = require("./data/todos");
+const express = require("express");
+const mongodb = require("mongodb");
+const db = require("../js/data/database.js");
+const { ObjectId } = require("mongodb");
 
-// function getNewId(list) {
-//   let maxId = 0;
-//   for (const item of list) {
-//     if (item.id > maxId) {
-//       maxId = item.id;
-//     }
-//   }
-//   return maxId + 1;
-// }
+const router = express.Router();
 
-// //Sort
-// function sortEarly() {
-//   todos.sort(function (a, b) {
-//     return new Date(a.created) - new Date(b.created);
-//   });
-// }
+//Sort
+function sortEarly() {
+  todos.sort(function (a, b) {
+    return new Date(a.created) - new Date(b.created);
+  });
+}
 
-// function sortLate() {
-//   todos.sort(function (a, b) {
-//     return new Date(b.created) - new Date(a.created);
-//   });
-// }
+function sortLate() {
+  todos.sort(function (a, b) {
+    return new Date(b.created) - new Date(a.created);
+  });
+}
 
-// function doneTodo() {
-//   // for (const todo of todos) {
-//   //   if ((todo.done = true)) {
-//   //     console.log("Its done");
-//   //   } else {
-//   //     console.log("Not done");
-//   //   }
-//   // }
-//   const doneTodo = [];
+// READ
+router.get("/", async (req, res) => {
+  const todos = await db.getTodoCollection();
 
-//   for (let i = 0; i < todos.length; i++) {
-//     if (todos[i].done === true) {
-//       //console.log("hej");
-//       doneTodo.push(todos[i]);
-//     } else {
-//       continue;
-//     }
-//   }
-//   return doneTodo;
-// }
+  res.render("todoRead", { todos });
+});
 
-// //completed
+// CREATE
+// Create the create page at /create
+router.get("/create", (req, res) => {
+  res.render("todoCreate");
+});
 
-// // If value done
-// // if (req.body.checked) {
-// //   console.log("It's done");
-// // } else {
-// //   console.log("NOT done.");
-// // }
+router.post("/create", async (req, res) => {
+  const todo = {
+    created: parseInt(req.body.created),
+    description: req.body.description,
+    done: req.body.done,
+  };
+  const dataBase = await db.getTodoCollection();
+  await dataBase.insertOne(todo);
 
-// // Initialize the app.
-// const app = express();
+  res.redirect("/todo");
+});
 
-// // Use the template engine/view.
-// app.engine(
-//   "hbs",
-//   exphbs.engine({
-//     defaultLayout: "main",
-//     extname: ".hbs",
-//   })
-// );
+router.get("/sortEarly", async (req, res) => {
+  const todos = await db.getTodoCollection();
+  sortEarly();
+  res.render("todoSortEarly", { todos });
+});
 
-// app.set("view engine", "hbs");
+router.get("/sortLate", async (req, res) => {
+  const todos = await db.getTodoCollection();
+  sortLate();
+  res.render("todoSortLate", { todos });
+});
 
-// // Tells the app that there will be css and/or image files.
-// app.use(express.static("public"));
+router.get("/:id", async (req, res) => {
+  const id = ObjectId(req.params.id);
 
-// // To change the url.
-// app.use(express.urlencoded({ extended: true }));
+  const dataBase = await db.getTodoCollection();
+  dataBase.findOne({ _id: id }, (err, todo) => {
+    res.render("oneTodo", todo);
+  });
+});
 
-// // Create the home page at /.
-// app.get("/", (req, res) => {
-//   res.render("home");
-// });
+// UPDATE
+// Create the update page at /update
+router.get("/:id/update", async (req, res) => {
+  const id = ObjectId(req.params.id);
 
-// // READ
-// app.get("/todo", (req, res) => {
-//   doneTodo();
+  const dataBase = await db.getTodoCollection();
+  await dataBase.findOne({ _id: id }, (err, todo) => {
+    res.render("todoUpdate", todo);
+  });
+});
 
-//   res.render("todoRead", { todos });
-// });
+router.post("/:id/update", async (req, res) => {
+  const id = ObjectId(req.params.id);
+  const todo = {
+    created: parseInt(req.body.created),
+    description: req.body.description,
+    done: req.body.done,
+  };
 
-// // CREATE
-// // Create the create page at /create
-// app.get("/todo/create", (req, res) => {
-//   res.render("todoCreate");
-// });
+  const dataBase = await db.getTodoCollection();
+  await dataBase.updateOne({ _id: id }, { set: todo });
 
-// app.post("/todo/create", (req, res) => {
-//   const id = getNewId(todos);
-//   const newTodo = {
-//     id: id,
-//     created: req.body.created,
-//     description: req.body.description,
-//     done: req.body.done,
-//   };
+  res.redirect("/:id");
+});
 
-//   todos.push(newTodo);
-//   res.redirect("/todo/" + id);
-// });
+// DELETE
+router.get("/todo/:id/delete", async (req, res) => {
+  const id = ObjectId(req.params.id);
 
-// app.get("/todo/sortEarly", (req, res) => {
-//   sortEarly();
-//   res.render("todoSortEarly", { todos });
-// });
+  const dataBase = await db.getTodoCollection();
+  await dataBase.deleteOne({ _id: id });
 
-// app.get("/todo/sortLate", (req, res) => {
-//   sortLate();
-//   res.render("todoSortLate", { todos });
-// });
+  res.redirect("/todo");
+});
 
-// app.get("/todo/done", (req, res) => {
-//   res.render("todoDone", { doneTodo });
-// });
-
-// app.get("/todo/:id", (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const todo = todos.find((t) => t.id == id);
-
-//   res.render("oneTodo", todo);
-// });
-
-// // UPDATE
-// // Create the update page at /update
-// app.get("/todo/:id/update", (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const todo = todos.find((t) => t.id == id);
-//   res.render("todoUpdate", todo);
-// });
-
-// app.post("/todo/:id/update", (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const index = todos.findIndex((i) => i.id == id);
-
-//   todos[index].created = req.body.created;
-//   todos[index].description = req.body.description;
-//   todos[index].done = req.body.done;
-
-//   res.redirect("/todo/");
-// });
-
-// // DELETE
-// // Create the delete page at /delete
-// app.get("/todo/:id/delete", (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const todo = todos.find((t) => t.id == id);
-
-//   res.render("todoDelete", todo);
-// });
-
-// app.post("/todo/:id/delete", (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const index = todos.findIndex((i) => i.id == id);
-
-//   todos.splice(index, 1);
-
-//   res.redirect("/todo");
-// });
+module.exports = router;

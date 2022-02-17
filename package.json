@@ -8,7 +8,7 @@
   "name": "nodejs-todo",
   "description": "A TODO list created using:\r Nodejs\r Express\r Template engine\r Forms",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "js/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
