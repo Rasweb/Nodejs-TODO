@@ -5,19 +5,6 @@ const { ObjectId } = require("mongodb");
 
 const router = express.Router();
 
-//Sort
-function sortEarly() {
-  todos.sort(function (a, b) {
-    return new Date(a.created) - new Date(b.created);
-  });
-}
-
-function sortLate() {
-  todos.sort(function (a, b) {
-    return new Date(b.created) - new Date(a.created);
-  });
-}
-
 // READ
 router.get("/", async (req, res) => {
   const collection = await db.getTodoCollection();
@@ -42,19 +29,6 @@ router.post("/create", async (req, res) => {
   await collection.insertOne(todo);
 
   res.redirect("/todo");
-});
-
-router.get("/sortEarly", async (req, res) => {
-  sortEarly();
-  const todos = await db.getTodoCollection();
-
-  res.render("todoSortEarly", { todos });
-});
-
-router.get("/sortLate", async (req, res) => {
-  const todos = await db.getTodoCollection();
-  sortLate();
-  res.render("todoSortLate", { todos });
 });
 
 router.get("/:id", async (req, res) => {
@@ -99,6 +73,35 @@ router.post("/:id/delete", async (req, res) => {
   await collection.deleteOne({ _id: id });
 
   res.redirect("/todo");
+});
+
+// Sort
+router.get("/sortEarly", async (req, res) => {
+  const collection = await db.getTodoCollection();
+  const todos = await collection.find().toArray();
+
+  function sortEarly() {
+    todos.sort(function (a, b) {
+      return new Date(a.created) - new Date(b.created);
+    });
+  }
+
+  const sortFunction = sortEarly();
+
+  res.render("todoSortEarly", { todos, sortFunction });
+});
+
+router.get("/sortLate", async (req, res) => {
+  const collection = await db.getTodoCollection();
+  const todos = await collection.find().toArray();
+
+  function sortLate() {
+    todos.sort(function (a, b) {
+      return new Date(b.created) - new Date(a.created);
+    });
+  }
+  const sortFunction = sortLate();
+  res.render("todoSortLate", { todos, sortFunction });
 });
 
 module.exports = router;
