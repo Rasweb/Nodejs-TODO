@@ -10,13 +10,13 @@ router.get("/", async (req, res) => {
   const collection = await db.getTodoCollection();
   const todos = await collection.find().toArray();
 
-  res.render("todoRead", { todos });
+  res.render("todo/todoRead", { todos });
 });
 
 // CREATE
 // Create the create page at /create
 router.get("/create", (req, res) => {
-  res.render("todoCreate");
+  res.render("todo/todoCreate");
 });
 
 router.post("/create", async (req, res) => {
@@ -36,7 +36,7 @@ router.get("/:id", async (req, res) => {
 
   const dataBase = await db.getTodoCollection();
   dataBase.findOne({ _id: id }, (err, todo) => {
-    res.render("oneTodo", todo);
+    res.render("todo/oneTodo", todo);
   });
 });
 
@@ -47,7 +47,7 @@ router.get("/:id/update", async (req, res) => {
 
   const dataBase = await db.getTodoCollection();
   dataBase.findOne({ _id: id }, (err, todo) => {
-    res.render("todoUpdate", todo);
+    res.render("todo/todoUpdate", todo);
   });
 });
 
@@ -88,7 +88,7 @@ router.get("/sortEarly", async (req, res) => {
 
   const sortFunction = sortEarly();
 
-  res.render("todoSortEarly", { todos, sortFunction });
+  res.render("todo/todoSortEarly", { todos, sortFunction });
 });
 
 router.get("/sortLate", async (req, res) => {
@@ -101,7 +101,7 @@ router.get("/sortLate", async (req, res) => {
     });
   }
   const sortFunction = sortLate();
-  res.render("todoSortLate", { todos, sortFunction });
+  res.render("todo/todoSortLate", { todos, sortFunction });
 });
 
 module.exports = router;
