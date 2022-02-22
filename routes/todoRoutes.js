@@ -31,6 +31,27 @@ router.post("/create", async (req, res) => {
   res.redirect("/todo");
 });
 
+// Sort
+router.get("/sortAsc", async (req, res) => {
+  const collection = await db.getTodoCollection();
+  const todos = await collection
+    .find()
+    .sort([["created", "asc"]])
+    .toArray();
+
+  res.render("todo/todoSortAsc", { todos });
+});
+
+router.get("/sortDesc", async (req, res) => {
+  const collection = await db.getTodoCollection();
+  const todos = await collection
+    .find()
+    .sort([["created", "desc"]])
+    .toArray();
+
+  res.render("todo/todoSortDesc", { todos });
+});
+
 router.get("/:id", async (req, res) => {
   const id = ObjectId(req.params.id);
 
@@ -73,35 +94,6 @@ router.post("/:id/delete", async (req, res) => {
   await collection.deleteOne({ _id: id });
 
   res.redirect("/todo");
-});
-
-// Sort
-router.get("/sortEarly", async (req, res) => {
-  const collection = await db.getTodoCollection();
-  const todos = await collection.find().toArray();
-
-  function sortEarly() {
-    todos.sort(function (a, b) {
-      return new Date(a.created) - new Date(b.created);
-    });
-  }
-
-  const sortFunction = sortEarly();
-
-  res.render("todo/todoSortEarly", { todos, sortFunction });
-});
-
-router.get("/sortLate", async (req, res) => {
-  const collection = await db.getTodoCollection();
-  const todos = await collection.find().toArray();
-
-  function sortLate() {
-    todos.sort(function (a, b) {
-      return new Date(b.created) - new Date(a.created);
-    });
-  }
-  const sortFunction = sortLate();
-  res.render("todo/todoSortLate", { todos, sortFunction });
 });
 
 module.exports = router;
