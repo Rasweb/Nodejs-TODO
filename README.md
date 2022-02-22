@@ -8,9 +8,9 @@ To install it use this link: https://nodejs.org/en/
 
 A MongoDB connection string is required to run this application.
 If you have a connection string:
-Find the .env file and paste the string in there.
+Create the .env file and paste the string in there.
 If you dont have a connection string:
-To configure the string use this link: https://www.mongodb.com/
+Configure the string using this link; https://www.mongodb.com/
 
 To start the application:
 Open the terminal i the folder and type:
