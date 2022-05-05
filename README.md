@@ -1,22 +1,62 @@
-# Nodejs-TODO
+## Table of contents
 
-A TODO list created using:
-Nodejs, Express, Template engines, and Forms.
+- [Overview](#overview)
+  - [Nodejs-TODO](#nodejs-tODO)
+  - [Project setup](#project-setup)
+  - [Built with](#built-with)
+  - [Screenshot](#screenshot)
+  - [Author](#author)
+
+## Overview
+
+### Nodejs-TODO
+
+Welcome to a Node Js To do list.
+
+This is a to do list from Medieinstitutet Stockholm Sweden.
 
 NodeJs is required to use this project.
 To install it use this link: https://nodejs.org/en/
 
 A MongoDB connection string is required to run this application.
+
 If you have a connection string:
-Create the .env file and paste the string in there.
-If you dont have a connection string:
-Configure the string using this link; https://www.mongodb.com/
+Create the .env file in the root and paste the string in there.
 
-To start the application:
-Open the terminal i the folder and type:
-npm i
+```
+MONGODB_CONNECTION_STRING = ""
+```
 
-To run the project type:
+## Project setup
+
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+
+```
 nodemon
+```
 
-To open the project in the web browser; either click the link in the terminal or type http://localhost:8000 in the url.
+### Built with
+
+- html
+- scss/sass
+- javascript
+- node.js
+- mongodb
+- express.js
+- handlebars
+- template engines
+- forms
+
+### Screenshot
+
+![Screenshot](./SiteScreenshot.png)
+
+### Author
+
+[Github](https://github.com/Rasweb)
+
+[Website](https://rasweb.one/)
